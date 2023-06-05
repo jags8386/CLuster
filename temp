@@ -1,0 +1,21 @@
+n_clusters = [2,3,4,5]
+n_coms = [2,3,4,6,8,10,12,16]
+cluster_df_lists = []
+
+cluster_results = pd.DataFrame(columns = ['method', 'components', 'n_clusters', 'scores', 'distortions'])
+
+
+for m in methods:
+#     print("Performing " + m + " method")
+    for c in n_coms:
+        for n in n_clusters:
+            print("Performing " + m + " method using " + str(c) + " components for " + str(n) + " clusters")
+            
+            
+            res, silhouette_avg, distortion = cluster_analysis(df_cluster, standardize=True, method=m,
+                                                               n_components=c, n_clusters=n, plot_result=True)
+            
+            cluster_df_lists.append(res)
+            
+            cluster_results.loc[len(cluster_results)] = [m, c, n,  silhouette_avg, distortion]
+            
